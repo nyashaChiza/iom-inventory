@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 STATUS_CHOICES = [
         ('Pending', 'Pending'),
@@ -37,7 +37,7 @@ class Stock(models.Model):
 
 
 class Request(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     source = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='source_department')  # Source department
     destination = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='destination_department')  # Destination department
     approved = models.BooleanField(default=False)
@@ -58,7 +58,7 @@ class Request(models.Model):
 
 class Approval(models.Model):
     request = models.ForeignKey(Request, on_delete=models.CASCADE, related_name='approvals')
-    approver = models.ForeignKey(User, on_delete=models.CASCADE)
+    approver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
