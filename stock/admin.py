@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Department, Stock, Request, Transaction
+from .models import Category, Department, Stock, Request, Transaction, Approval
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'created', 'updated')
@@ -27,6 +27,12 @@ class TransactionAdmin(admin.ModelAdmin):
     search_fields = ('stock__name',)
     ordering = ('-created',)
 
+class ApprovalAdmin(admin.ModelAdmin):
+    list_display = ('request', 'approver', 'status', 'created', 'updated')
+    search_fields = ('request__user__username', 'approver__username', 'status')
+    list_filter = ('status', 'created')
+
+admin.site.register(Approval, ApprovalAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Stock, StockAdmin)
