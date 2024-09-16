@@ -41,7 +41,7 @@ class Request(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.user} - {self.stock.name}"
+        return f"{self.user} - {self.approved}"
 
 
 class Transaction(models.Model):
@@ -51,6 +51,7 @@ class Transaction(models.Model):
     ]
 
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
+    request = models.ForeignKey(Request, on_delete=models.CASCADE, related_name='transactions')
     quantity = models.IntegerField()
     transaction_type = models.CharField(max_length=6, choices=TRANSACTION_TYPE_CHOICES)
     quantity = models.IntegerField(default=1)

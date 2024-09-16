@@ -4,4 +4,4 @@ find . -path "*/migrations/*.pyc" -not -path "*/django/*" -delete
 rm db.sqlite3
 
 python manage.py makemigrations
-python manage.py migratem
+python manage.py migrate
