@@ -1,0 +1,63 @@
+{% load static %}
+<!-- select region modal -->
+<div class="modal fade" id="getReportModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Generate Report</h5>
+          <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <em class="icon ni ni-cross"></em>
+          </a>
+        </div>
+        <div class="modal-body">
+  
+            <div class="row g-4">
+              <form action="#" method="post">
+                  {% csrf_token %}
+                <div class="row g-4">
+                  
+  
+                  <div>
+                    <label for="id_customer">Month:</label>
+  
+                    <input
+                      type="month"
+                      name="month"
+                      class="form-control"
+                      id="id_customer"
+                    />
+                  </div>
+  
+                  <div>
+                    <label for="id_status">Report Type:</label>
+  
+                    <select name="report_type" class="form-control" id="id_status">
+                      <option value="sales_report" >Sales Report</option>
+                      <option value="requisition_report">Requisition Report</option>
+                      <option value="inventory_report">Inventory Report</option>
+                    </select>
+  
+                    
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <button
+                        type="submit"
+                        class="btn btn-lg btn-primary"
+                        value="save"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  </div>
+<!-- .modal -->
+

@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+
+<head>
+    <base href="../">
+    <meta charset="utf-8">
+    <meta name="author" content="Nyasha Chizampeni">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A sales application">
+
+    <meta name="theme-color" content="white">
+``
+    <!-- manifest.json  -->
+    <link rel="manifest" href='{% static "manifest.json" %}'>
+    <!-- IE11 & Safari Support  -->
+    <link rel="apple-touch-icon" href='{% static "static/images/favicon.png" %}'>
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href='{% static "images/favicon.png" %}'>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register("{% static 'service-worker.js' %}")
+            .then((registration) => {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch((error) => {
+                console.error('Service Worker registration failed:', error);
+            });
+        }
+    </script>
+    <!-- Page Title  -->
+    <title>GDS</title>
+    <!-- StyleSheets  -->
+    {% include "layouts/styles.html" %}
+</head>
+
+<body class="nk-body bg-lighter npc-general has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- sidebar @s -->
+            {% include "layouts/sidebar.html" %}
+            <!-- sidebar @e -->
+            <!-- wrap @s -->
+            <div class="nk-wrap">
+                <!-- main header @s -->
+                {% include "layouts/header.html" %}
+                <!-- main header @e -->
+                {% include "layouts/messages.html" %}
+                <!-- content @s -->
+                <div class="py-2 my-2">
+                {% block body %}
+                {% endblock %}
+                </div>
+                <!-- content @e -->
+                <!-- footer @s -->
+                {% include "layouts/footer.html" %}
+                <!-- footer @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+    <!-- select region modal -->
+    {% include "layouts/modals.html" %}
+    <!-- JavaScript -->
+     {% include "layouts/scripts.html" %}
+    
+</body>
+
+</html>
