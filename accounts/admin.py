@@ -9,7 +9,7 @@ class RoleAdmin(admin.ModelAdmin):
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    list_display = ('email', 'username', 'role', 'is_staff', 'is_active', 'created_at', 'updated_at')
+    list_display = ('email', 'username', 'role', 'is_staff', 'is_active', 'created', 'updated')
     list_filter = ('is_staff', 'is_active', 'role')
     search_fields = ('email', 'username')
     ordering = ('email',)

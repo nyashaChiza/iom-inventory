@@ -6,16 +6,16 @@
     <div class="nk-block-head nk-block-head-sm">
         <div class="nk-block-between py-3 px-3 bg-light rounded-3">
             <div class="nk-block-head-content">
-                <h3 class="nk-block-title page-title">Stock </h3>
+                <h3 class="nk-block-title page-title">Requests </h3>
                 <div class="nk-block-des text-soft">
-                    <p>All Stock</p>
+                    <p>All RRequests</p>
                 </div>
             </div><!-- .nk-block-head-content -->
             <div class="nk-block-head-content">
                 <div class="toggle-wrap nk-block-tools-toggle">
                     <div class="toggle-expand-content" data-content="pageMenu">
                         <ul class="nk-block-tools g-3">                        
-                            <li class="nk-block-tools-opt"><a href="{% url 'stock_create' %}" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>New Stock</span></a></li>
+                            <li class="nk-block-tools-opt"><a href="{% url 'request_create' %}" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>New Request</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -32,20 +32,19 @@
              
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Category</th>
-                        <th>Department</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for stock in stocks %}
+                    {% for request in requests %}
                     <tr>
-                        <td>{{stock.name}}</td>
-                        <td>{{stock.quantity}} Units</td>
-                        <td>{{stock.category}}</td>
-                        <td>{{stock.department}}</td>
+                        <td>{{request.source}}</td>
+                        <td>{{request.destination}} Units</td>
+                        <td>{{request.approved}}</td>
+                        
                         
                         <td class="nk-tb-col nk-tb-col-tools">
                             <ul class="nk-tb-actions gx-1">
@@ -54,8 +53,8 @@
                                         <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                         <div class="dropdown-menu dropdown-menu-end">
                                             <ul class="link-list-opt no-bdr">
-                                                <li><a href="{% url 'stock_details' stock.pk %}"><em class="icon ni ni-eye"></em><span>Details</span></a></li>
-                                                <li><a href="{% url 'stock_update' stock.pk  %}"><em class="icon ni ni-edit"></em><span>Update</span></a></li>
+                                                <li><a href="#"><em class="icon ni ni-eye"></em><span>Details</span></a></li>
+                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Update</span></a></li>
                                                 {% comment %} <li> <span class="preview-item text-danger" data-bs-toggle="modal" data-bs-target="#modalAlert{{stock.pk}}"><span>&nbsp;&nbsp;&nbsp;<em class="icon ni ni-trash-alt"></em> &nbsp;&nbsp;&nbsp;&nbsp;Delete</span></span></li> {% endcomment %}
                                                
                                              </ul>
@@ -63,7 +62,7 @@
                                     </div>
                                 </li>
                             </ul>
-                        </td>
+                        </td> 
                     </tr>  
                     <div class="modal fade" tabindex="-1" id="modalAlert{{stock.pk}}">
                         <div class="modal-dialog" role="document">
@@ -74,7 +73,7 @@
                                         <h4 class="nk-modal-title">Delete {{ stock }} </h4><div class="nk-modal-text"><p class="lead">Are You Sure You Want To Delete This Part?</p>
                                     </div>
                                     <div class="nk-modal-action mt-5">
-                                        <form method="POST" action='{% url "stock_delete" stock.pk %}'>
+                                        <form method="POST" action='#'>
                                             {% csrf_token %}
                                             <button type='submit' class="btn btn-lg btn-mw btn-danger" >Delete</button>
                                             <a href="#" class="btn btn-lg btn-mw btn-secondary" data-bs-dismiss="modal">Cancel</a>

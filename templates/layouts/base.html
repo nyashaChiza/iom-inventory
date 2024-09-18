@@ -10,7 +10,7 @@
     <meta name="description" content="A sales application">
 
     <meta name="theme-color" content="white">
-``
+
     <!-- manifest.json  -->
     <link rel="manifest" href='{% static "manifest.json" %}'>
     <!-- IE11 & Safari Support  -->
@@ -18,19 +18,9 @@
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href='{% static "images/favicon.png" %}'>
 
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register("{% static 'service-worker.js' %}")
-            .then((registration) => {
-                console.log('Service Worker registered with scope:', registration.scope);
-            })
-            .catch((error) => {
-                console.error('Service Worker registration failed:', error);
-            });
-        }
-    </script>
+
     <!-- Page Title  -->
-    <title>GDS</title>
+    <title>IOM Inventory</title>
     <!-- StyleSheets  -->
     {% include "layouts/styles.html" %}
 </head>
@@ -49,9 +39,13 @@
                 <!-- main header @e -->
                 {% include "layouts/messages.html" %}
                 <!-- content @s -->
-                <div class="py-2 my-2">
-                {% block body %}
-                {% endblock %}
+                <div class="py-5 my-5 mx-2 px-2">
+                {% block navigation %}
+                {% endblock%}
+                <div class="my-3 py-3">
+                    {% block body %}
+                    {% endblock %}
+                </div>
                 </div>
                 <!-- content @e -->
                 <!-- footer @s -->

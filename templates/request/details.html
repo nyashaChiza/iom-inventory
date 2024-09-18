@@ -1,0 +1,79 @@
+{% extends "layouts/base.html" %} 
+{% load crispy_forms_tags %}
+
+{% block navigation %}
+<div class="nk-content-body">
+    <div class="nk-block-head nk-block-head-sm">
+        <div class="nk-block-between py-3 px-3 bg-light rounded-3">
+            <div class="nk-block-head-content">
+                <h3 class="nk-block-title page-title">{{part}}</h3>
+                <div class="nk-block-des text-soft">
+                    <p>Details</p>
+                </div>
+            </div><!-- .nk-block-head-content -->
+            <div class="nk-block-head-content">
+                <div class="toggle-wrap nk-block-tools-toggle">
+                    <div class="toggle-expand-content" data-content="pageMenu">
+                        <ul class="nk-block-tools g-3">
+                            <li class="nk-block-tools-opt"><a href="{%url 'parts-index' %}" class="btn btn-primary"><em class="icon ni ni-curve-down-left"></em><span>Back</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- .nk-block-head-content -->
+        </div><!-- .nk-block-between -->
+    </div><!-- .nk-block-head -->
+{% endblock%}
+
+{% block content%}
+
+<div class="nk-block nk-block-lg">
+    <div class="card card-bordered">
+        <div class="card-inner">
+            <div class="card-head">
+                <h5 class="card-title">Part Information</h5>
+            </div>
+            <ul class="nav nav-tabs mt-n3">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#tabItem5"><em class="icon ni ni-eye-alt"></em><span>Description</span></a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tabItem5">
+                    <div class="d-flex align-center justify-content-between py-1">
+                        <span class="text-muted">Code</span>
+                        <span class="text-muted">{{part.code}}</span>
+                    </div>
+                    <hr class=" mx-auto bg-dark">
+                    <div class="d-flex align-center justify-content-between py-1">
+                        <span class="text-muted">Qunatity</span>
+                        <span class="text-muted">{{part.quantity}} Units</span>
+                    </div>
+                    <hr class=" mx-auto bg-dark">
+                    <div class="d-flex align-center justify-content-between py-1">
+                        <span class="text-muted">Price</span>
+                        <span class="text-muted">${{part.price}}</span>
+                    </div>
+                    <hr class="mx-auto bg-dark">
+                    <div class="d-flex align-center justify-content-between py-1">
+                        <span class="text-muted">Name</span>
+                        <span class="text-muted">{{part.name}}</span>
+                    </div>
+                    <hr class=" mx-auto bg-dark">
+                    <div class="d-flex align-center justify-content-between py-1">
+                        <span class="text-muted">Category</span>
+                        <span class="text-muted">{{part.category}}</span>
+                    </div>
+                    <hr class=" mx-auto bg-dark">
+                    <div class="d-flex align-center justify-content-between py-1">
+                        <span class="text-muted">Description</span>
+                        <span class="text-muted">{{part.description}}</span>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div><!-- .nk-block -->
+
+
+
+{% endblock %}
