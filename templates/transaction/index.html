@@ -1,21 +1,21 @@
-{% extends "layouts/base.html" %} 
-{% load crispy_forms_tags %}
+{% extends 'layouts/base.html' %}
+{% load static%}
 
 {% block navigation %}
 <div class="nk-content-body">
     <div class="nk-block-head nk-block-head-sm">
         <div class="nk-block-between py-3 px-3 bg-light rounded-3">
             <div class="nk-block-head-content">
-                <h3 class="nk-block-title page-title">{{request}}</h3>
+                <h3 class="nk-block-title page-title">Requests </h3>
                 <div class="nk-block-des text-soft">
-                    <p>Details</p>
+                    <p>All RRequests</p>
                 </div>
             </div><!-- .nk-block-head-content -->
             <div class="nk-block-head-content">
                 <div class="toggle-wrap nk-block-tools-toggle">
                     <div class="toggle-expand-content" data-content="pageMenu">
-                        <ul class="nk-block-tools g-3">
-                            <li class="nk-block-tools-opt"><a href="{%url 'request_index' %}" class="btn btn-primary"><em class="icon ni ni-curve-down-left"></em><span>Back</span></a></li>
+                        <ul class="nk-block-tools g-3">                        
+                            <li class="nk-block-tools-opt"><a href="{% url 'request_create' %}" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>New Request</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -25,63 +25,25 @@
 {% endblock%}
 
 {% block body %}
-
-<div class="nk-block nk-block-lg">
-    <div class="card card-bordered">
-        <div class="card-inner">
-            <div class="card-head">
-                <h5 class="card-title">Part Information</h5>
-            </div>
-            <ul class="nav nav-tabs mt-n3">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#tabItem5"><em class="icon ni ni-eye-alt"></em><span>Description</span></a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="tabItem5">
-                    <div class="d-flex align-center justify-content-between py-1">
-                        <span class="text-muted">User</span>
-                        <span class="text-muted">{{request.user}}</span>
-                    </div>
-                    <hr class=" mx-auto bg-dark">
-                    <div class="d-flex align-center justify-content-between py-1">
-                        <span class="text-muted">Source</span>
-                        <span class="text-muted">{{request.source}}</span>
-                    </div>
-                    <hr class=" mx-auto bg-dark">
-                    <div class="d-flex align-center justify-content-between py-1">
-                        <span class="text-muted">Destination</span>
-                        <span class="text-muted">{{request.destination}}</span>
-                    </div>
-                    
-                 </div>
-            </div>
-        </div>
-    </div>
-</div><!-- .nk-block -->
-
 <div class="nk-block nk-block-lg">
     <div class="card card-bordered card-preview">
         <div class="card-inner">
-            <div class="card-head">
-                <h5 class="card-title">Request Items</h5>
-            </div>
             <table class="datatable-init-export nowrap table" data-export-title="Export">
              
                 <thead>
                     <tr>
-                        <th>Stock</th>
-                        <th>Quantity</th>
-                        <th>Type</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for transaction in request.transactions.all %}
+                    {% for request in requests %}
                     <tr>
-                        <td>{{transaction.stock}}</td>
-                        <td>{{transaction.quantity}} Units</td>
-                        <td>{{transaction.transaction_type}}</td>
+                        <td>{{request.source}}</td>
+                        <td>{{request.destination}} Units</td>
+                        <td>{{request.approved}}</td>
                         
                         
                         <td class="nk-tb-col nk-tb-col-tools">
@@ -108,7 +70,7 @@
                                 <div class="modal-body modal-body-lg text-center">
                                     <div class="nk-modal">
                                         <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></em>
-                                        <h4 class="nk-modal-title">Delete {{ transaction }} </h4><div class="nk-modal-text"><p class="lead">Are You Sure You Want To Delete This Part?</p>
+                                        <h4 class="nk-modal-title">Delete {{ stock }} </h4><div class="nk-modal-text"><p class="lead">Are You Sure You Want To Delete This Part?</p>
                                     </div>
                                     <div class="nk-modal-action mt-5">
                                         <form method="POST" action='#'>
@@ -127,7 +89,6 @@
             </table>
         </div>
     </div><!-- .card-preview -->
-</div>
-
+</div> <!-- nk-block -->
 
 {% endblock %}

@@ -17,6 +17,10 @@ class TransactionCreateView(generic.CreateView):
     form_class = TransactionForm
     template_name = 'transaction/create.html'
 
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        context['request'] = get_object_or_404(Request, id=self.kwargs.get('request_id'))
+        return context
     def get_initial(self):
         initial = super().get_initial()
         request_id = self.kwargs.get('request_id')
@@ -30,6 +34,10 @@ class TransactionCreateView(generic.CreateView):
         
         # Redirect to the request detail page
         return redirect(reverse('request_detail', kwargs={'pk': request_id}))
+    
+    def get_success_url(self) -> str:
+        request_id = self.kwargs.get('request_id')
+        return reverse('request_detail', kwargs={'pk': request_id})
 
 
 
