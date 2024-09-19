@@ -1,31 +1,21 @@
-{% extends "layouts/base.html" %} 
-{% load crispy_forms_tags %}
+{% extends 'layouts/base.html' %}
+{% load static%}
 
 {% block navigation %}
 <div class="nk-content-body">
     <div class="nk-block-head nk-block-head-sm">
         <div class="nk-block-between py-3 px-3 bg-light rounded-3">
             <div class="nk-block-head-content">
-                <h3 class="nk-block-title page-title">{{request}}</h3>
+                <h3 class="nk-block-title page-title">Users</h3>
                 <div class="nk-block-des text-soft">
-                    <p>Details</p>
+                    <p>All Users</p>
                 </div>
             </div><!-- .nk-block-head-content -->
             <div class="nk-block-head-content">
-                
                 <div class="toggle-wrap nk-block-tools-toggle">
                     <div class="toggle-expand-content" data-content="pageMenu">
-                        <ul class="nk-block-tools g-3">
-                            <div class="dropdown">
-                                <a href="#" class="btn btn-primary" data-bs-toggle="dropdown"><span>Actions</span><em class="icon ni ni-chevron-down"></em></a>
-                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-sm mt-1">
-                                    <ul class="link-list-plain">
-                                        <li><a href="{% url 'approval_list' request.pk %}">Approvals</a></li>
-                                        <li><a href="{% url 'transaction_create' request.pk %}">Add New Transaction</a></li>
-                                        <li><a href="{% url 'request_index' %}">Back</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                        <ul class="nk-block-tools g-3">                        
+                            <li class="nk-block-tools-opt"><a href="{% url 'user_create' %}" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>New Request</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -35,63 +25,25 @@
 {% endblock%}
 
 {% block body %}
-
-<div class="nk-block nk-block-lg">
-    <div class="card card-bordered">
-        <div class="card-inner">
-            <div class="card-head">
-                <h5 class="card-title">Request Information</h5>
-            </div>
-            <ul class="nav nav-tabs mt-n3">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#tabItem5"><em class="icon ni ni-eye-alt"></em><span>Description</span></a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="tabItem5">
-                    <div class="d-flex align-center justify-content-between py-1">
-                        <span class="text-muted">User</span>
-                        <span class="text-muted">{{request.user}}</span>
-                    </div>
-                    <hr class=" mx-auto bg-dark">
-                    <div class="d-flex align-center justify-content-between py-1">
-                        <span class="text-muted">Source</span>
-                        <span class="text-muted">{{request.source}}</span>
-                    </div>
-                    <hr class=" mx-auto bg-dark">
-                    <div class="d-flex align-center justify-content-between py-1">
-                        <span class="text-muted">Destination</span>
-                        <span class="text-muted">{{request.destination}}</span>
-                    </div>
-                    
-                 </div>
-            </div>
-        </div>
-    </div>
-</div><!-- .nk-block -->
-
 <div class="nk-block nk-block-lg">
     <div class="card card-bordered card-preview">
         <div class="card-inner">
-            <div class="card-head">
-                <h5 class="card-title">Request Items</h5>
-            </div>
             <table class="datatable-init-export nowrap table" data-export-title="Export">
              
                 <thead>
                     <tr>
-                        <th>Stock</th>
-                        <th>Quantity</th>
-                        <th>Type</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for transaction in request.transactions.all %}
+                    {% for user in users %}
                     <tr>
-                        <td>{{transaction.stock}}</td>
-                        <td>{{transaction.quantity}} Units</td>
-                        <td>{{transaction.transaction_type}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{% if user.is_active %} Active {% else %}Suspended {% endif %}</td>
                         
                         
                         <td class="nk-tb-col nk-tb-col-tools">
@@ -101,8 +53,7 @@
                                         <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                         <div class="dropdown-menu dropdown-menu-end">
                                             <ul class="link-list-opt no-bdr">
-                                                <li><a href="#"><em class="icon ni ni-eye"></em><span>Details</span></a></li>
-                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Update</span></a></li>
+                                                <li><a href="{% url 'user_update' user.pk %}"><em class="icon ni ni-edit"></em><span>Update</span></a></li>
                                                 {% comment %} <li> <span class="preview-item text-danger" data-bs-toggle="modal" data-bs-target="#modalAlert{{stock.pk}}"><span>&nbsp;&nbsp;&nbsp;<em class="icon ni ni-trash-alt"></em> &nbsp;&nbsp;&nbsp;&nbsp;Delete</span></span></li> {% endcomment %}
                                                
                                              </ul>
@@ -118,7 +69,7 @@
                                 <div class="modal-body modal-body-lg text-center">
                                     <div class="nk-modal">
                                         <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></em>
-                                        <h4 class="nk-modal-title">Delete {{ transaction }} </h4><div class="nk-modal-text"><p class="lead">Are You Sure You Want To Delete This Part?</p>
+                                        <h4 class="nk-modal-title">Delete {{ stock }} </h4><div class="nk-modal-text"><p class="lead">Are You Sure You Want To Delete This Part?</p>
                                     </div>
                                     <div class="nk-modal-action mt-5">
                                         <form method="POST" action='#'>
@@ -137,7 +88,6 @@
             </table>
         </div>
     </div><!-- .card-preview -->
-</div>
-
+</div> <!-- nk-block -->
 
 {% endblock %}

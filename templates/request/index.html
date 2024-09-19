@@ -32,6 +32,7 @@
              
                 <thead>
                     <tr>
+                        <th>Requester</th> 
                         <th>Source</th>
                         <th>Destination</th>
                         <th>Status</th>
@@ -41,9 +42,10 @@
                 <tbody>
                     {% for request in requests %}
                     <tr>
+                        <td>{{request.user}}</td>
                         <td>{{request.source}}</td>
                         <td>{{request.destination}} Units</td>
-                        <td>{{request.approved}}</td>
+                        <td>{% if request.approved%}Approved{% else %}Not Approved{% endif %}</td>
                         
                         
                         <td class="nk-tb-col nk-tb-col-tools">
@@ -53,7 +55,7 @@
                                         <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                         <div class="dropdown-menu dropdown-menu-end">
                                             <ul class="link-list-opt no-bdr">
-                                                <li><a href="#"><em class="icon ni ni-eye"></em><span>Details</span></a></li>
+                                                <li><a href="{% url 'request_details' request.pk %}"><em class="icon ni ni-eye"></em><span>Details</span></a></li>
                                                 <li><a href="#"><em class="icon ni ni-edit"></em><span>Update</span></a></li>
                                                 {% comment %} <li> <span class="preview-item text-danger" data-bs-toggle="modal" data-bs-target="#modalAlert{{stock.pk}}"><span>&nbsp;&nbsp;&nbsp;<em class="icon ni ni-trash-alt"></em> &nbsp;&nbsp;&nbsp;&nbsp;Delete</span></span></li> {% endcomment %}
                                                

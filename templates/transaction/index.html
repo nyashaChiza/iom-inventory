@@ -6,16 +6,16 @@
     <div class="nk-block-head nk-block-head-sm">
         <div class="nk-block-between py-3 px-3 bg-light rounded-3">
             <div class="nk-block-head-content">
-                <h3 class="nk-block-title page-title">Requests </h3>
+                <h3 class="nk-block-title page-title">Transactions</h3>
                 <div class="nk-block-des text-soft">
-                    <p>All RRequests</p>
+                    <p>All Transactions</p>
                 </div>
             </div><!-- .nk-block-head-content -->
             <div class="nk-block-head-content">
                 <div class="toggle-wrap nk-block-tools-toggle">
                     <div class="toggle-expand-content" data-content="pageMenu">
                         <ul class="nk-block-tools g-3">                        
-                            <li class="nk-block-tools-opt"><a href="{% url 'request_create' %}" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>New Request</span></a></li>
+                            <li class="nk-block-tools-opt"><a href="{% url 'request_index' %}" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>Back</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -32,37 +32,20 @@
              
                 <thead>
                     <tr>
-                        <th>Source</th>
-                        <th>Destination</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>Requester</th>
+                        <th>Transaction Type</th>
+                        <th>Stock</th>
+                        <th>Quantity</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for request in requests %}
+                    {% for transaction in transactions %}
                     <tr>
-                        <td>{{request.source}}</td>
-                        <td>{{request.destination}} Units</td>
-                        <td>{{request.approved}}</td>
-                        
-                        
-                        <td class="nk-tb-col nk-tb-col-tools">
-                            <ul class="nk-tb-actions gx-1">
-                                <li>
-                                    <div class="drodown">
-                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <ul class="link-list-opt no-bdr">
-                                                <li><a href="#"><em class="icon ni ni-eye"></em><span>Details</span></a></li>
-                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Update</span></a></li>
-                                                {% comment %} <li> <span class="preview-item text-danger" data-bs-toggle="modal" data-bs-target="#modalAlert{{stock.pk}}"><span>&nbsp;&nbsp;&nbsp;<em class="icon ni ni-trash-alt"></em> &nbsp;&nbsp;&nbsp;&nbsp;Delete</span></span></li> {% endcomment %}
-                                               
-                                             </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </td> 
+                        <td>{{transaction.request.user}}</td>
+                        <td>{{transaction.transaction_type}}</td>
+                        <td>{{transaction.stock}}</td>
+                        <td>{{transaction.quantity}}</td>
+                         
                     </tr>  
                     <div class="modal fade" tabindex="-1" id="modalAlert{{stock.pk}}">
                         <div class="modal-dialog" role="document">

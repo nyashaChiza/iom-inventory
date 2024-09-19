@@ -1,0 +1,95 @@
+{% extends "layouts/base.html" %} 
+{% load crispy_forms_tags %}
+
+{% block navigation %}
+<div class="nk-content-body">
+    <div class="nk-block-head nk-block-head-sm">
+        <div class="nk-block-between py-3 px-3 bg-light rounded-3">
+            <div class="nk-block-head-content">
+                <h3 class="nk-block-title page-title">Request Details</h3>
+                <div class="nk-block-des text-soft">
+                    <p>Details</p>
+                </div>
+            </div><!-- .nk-block-head-content -->
+            <div class="nk-block-head-content">
+                <div class="toggle-wrap nk-block-tools-toggle">
+                    <div class="dropdown">
+                        <a href="#" class="btn btn-primary" data-bs-toggle="dropdown"><span>Actions</span><em class="icon ni ni-chevron-down"></em></a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-sm mt-1">
+                            <ul class="link-list-plain">
+                                <li><a href="{% url 'request_details' object.request.pk %}">View Request</a></li>
+                                <li><a href="{% url 'request_index' %}">Back</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .nk-block-head-content -->
+        </div><!-- .nk-block-between -->
+    </div><!-- .nk-block-head -->
+{% endblock%}
+
+{% block body %}
+
+<div class="nk-block nk-block-lg">
+    <div class="card card-bordered">
+        <div class="card-inner">
+            <div class="card-head">
+                <h5 class="card-title">Approval Information</h5>
+            </div>
+            <ul class="nav nav-tabs mt-n3">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#tabItem5"><em class="icon ni ni-eye-alt"></em><span>Description</span></a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tabItem5">
+                    <div class="d-flex align-center justify-content-between py-1">
+                        <span class="text-muted">Requester</span>
+                        <span class="text-muted">{{object.request.user}}</span>
+                    </div>
+                    <hr class=" mx-auto bg-dark">
+                    <div class="d-flex align-center justify-content-between py-1">
+                        <span class="text-muted">Items</span>
+                        <span class="text-muted">{{object.request.transactions.count}}</span>
+                    </div>
+                    <hr class=" mx-auto bg-dark">
+                    <div class="d-flex align-center justify-content-between py-1">
+                        <span class="text-muted">Approval Status</span>
+                        <span class="text-muted">{% if object.request.approved %}Approved {% else %}Not Approved{% endif%} </span>
+                    </div>
+                    <hr class=" mx-auto bg-dark">
+                    <div class="d-flex align-center justify-content-between py-1">
+                        <span class="text-muted">Created On</span>
+                        <span class="text-muted">{{object.request.created}}</span>
+                    </div>
+                    
+                 </div>
+            </div>
+        </div>
+    </div>
+</div><!-- .nk-block -->
+
+<div class="nk-block nk-block-lg">
+    <div class="card card-bordered">
+        <div class="card-inner">
+            <div class="card-head">
+                <h5 class="card-title">Approval Information</h5>
+            </div>
+            <form action="{% url 'approval_update' object.pk %}" method="post">
+                {%csrf_token%}
+                <div class="row g-4">
+                    {{ form }}
+                    <div class="col-12">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-lg btn-primary" value="save">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

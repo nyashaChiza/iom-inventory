@@ -14,6 +14,7 @@ SECRET_KEY = 'django-insecure-g03m&o107_n3q0by(ro+v8a7#nhnehcv^fawjhfy5d#p^n%w_2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# settings.py
 ALLOWED_HOSTS = ['*']
 
 
@@ -113,3 +114,9 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4' 
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://0d1b-41-220-31-230.ngrok-free.app/',
+    'https://eb8d-41-220-31-230.ngrok-free.app/',
+]

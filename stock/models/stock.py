@@ -45,15 +45,24 @@ class Request(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.user} - {self.approved}"
+        status = 'Approved' if self.approved else 'Not Approved'
+        return f"{self.user} - {status}"
 
-    def update_approval_status(self):
-        approvals = self.approvals.all()
-        if approvals.count() > 0:
-            self.approved = all(approval.approved for approval in approvals)
-        else:
-            self.approved = False
-        self.save()
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        
+        if self.approved:
+            self.update_stock_balances()
+        
+    def update_stock_balances(self):
+        for transaction in self.transactions.all():
+            if transaction.transaction_type == 'ADD':
+                transaction.stock.quantity += transaction.quantity
+            elif transaction.transaction_type == 'REMOVE':
+                transaction.stock.quantity -= transaction.quantity
+            
+            # Save the updated stock quantity
+            transaction.stock.save()
 
 
 class Approval(models.Model):
@@ -66,12 +75,22 @@ class Approval(models.Model):
     def __str__(self):
         return f"Approval for {self.request} by {self.approver} - Status: {self.status}"
 
+    def save(self, *args, **kwargs):
+        # Call the parent save method
+        super().save(*args, **kwargs)
+        
+        # Check if all approvals for the request are approved
+        all_approved = all(approval.status == 'Approved' for approval in self.request.approvals.all())
+        # Update the request's approved status
+        self.request.approved = all_approved
+        self.request.save()
 
 class Transaction(models.Model):
     TRANSACTION_TYPE_CHOICES = [
         ('ADD', 'Addition'),
         ('REMOVE', 'Removal')
     ]
+
 
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
     request = models.ForeignKey(Request, on_delete=models.CASCADE, related_name='transactions')

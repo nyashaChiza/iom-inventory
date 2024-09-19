@@ -14,3 +14,5 @@ from stock.views.transaction import (
     TransactionUpdateView,
     TransactionDeleteView,
 )
+
+from stock.views.approval import ApprovalUpdateView, ApprovalListView

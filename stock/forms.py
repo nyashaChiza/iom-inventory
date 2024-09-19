@@ -1,5 +1,5 @@
 from django import forms
-from .models import Stock, Request, Transaction
+from .models import Stock, Request, Transaction, Approval
 
 class StockForm(forms.ModelForm):
     class Meta:
@@ -40,3 +40,12 @@ class TransactionForm(forms.ModelForm):
         self.fields['stock'].widget.attrs.update({'class': 'form-control'})
         self.fields['quantity'].widget.attrs.update({'class': 'form-control'})
         self.fields['transaction_type'].widget.attrs.update({'class': 'form-control'})
+        
+class ApprovalForm(forms.ModelForm):
+    class Meta:
+        model = Approval
+        fields = ['status']  # You can include other fields if needed
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['status'].widget.attrs.update({'class': 'form-control'})  # Add Bootstrap class

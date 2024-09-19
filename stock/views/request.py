@@ -1,7 +1,8 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from stock.models import Request
+from accounts.models import CustomUser
+from stock.models import Request, Approval
 from stock.forms import RequestForm
 from django.urls import reverse
 
@@ -12,19 +13,31 @@ class RequestListView(generic.ListView):
     template_name = 'request/index.html'
     context_object_name = 'requests'
 
-# Create View
 class RequestCreateView(generic.CreateView):
     model = Request
     form_class = RequestForm
     template_name = 'request/create.html'
-    success_url = reverse_lazy('request_index')  # This can be used for other redirects if needed
+    
+    
+    def get_success_url(self) -> str:
+        return reverse('transaction_create', kwargs={'request_id': self.object.id})
 
     def form_valid(self, form):
-        # Call the parent class's form_valid method to save the request
-        response = super().form_valid(form)
+        # Save the request instance
+        request_instance = form.save()
         
-        # Redirect to the TransactionCreateView with the new request ID
-        return redirect(reverse('transaction_create', kwargs={'request_id': self.object.id}))
+        # Create approval entries for all active users with approval roles
+        active_users_with_approval_role = self.get_active_users_with_approval_role()
+        for user in active_users_with_approval_role:
+            Approval.objects.create(request=request_instance, approver=user)
+
+        return super().form_valid(form)
+
+    def get_active_users_with_approval_role(self):
+        # Replace this with your actual logic to get active users with approval roles
+        return CustomUser.objects.filter(is_active=True, role__name='Approver')  # Adjust as per your user model
+
+
 
 # Detail View
 class RequestDetailView(generic.DetailView):

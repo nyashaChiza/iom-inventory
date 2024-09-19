@@ -16,9 +16,10 @@ from stock.views import (
     TransactionUpdateView,
     TransactionDeleteView,
 )
+from stock.views import ApprovalUpdateView, ApprovalListView
 
 urlpatterns = [
-    path('transactions/', TransactionListView.as_view(), name='transaction_index'),
+    path('stocks/<int:stock_id>/transactions/', TransactionListView.as_view(), name='transaction_list'),
     path('transactions/create/<int:request_id>/', TransactionCreateView.as_view(), name='transaction_create'),
     path('transactions/<int:pk>/', TransactionDetailView.as_view(), name='transaction_detail'),
     path('transactions/<int:pk>/update/', TransactionUpdateView.as_view(), name='transaction_update'),
@@ -30,7 +31,9 @@ urlpatterns = [
     path('<int:pk>/delete/', StockDeleteView.as_view(), name='stock_delete'),
     path('requests/', RequestListView.as_view(), name='request_index'),
     path('requests/create/', RequestCreateView.as_view(), name='request_create'),
-    path('requests/<int:pk>/', RequestDetailView.as_view(), name='request_detail'),
+    path('requests/<int:pk>/', RequestDetailView.as_view(), name='request_details'),
     path('requests/<int:pk>/update/', RequestUpdateView.as_view(), name='request_update'),
     path('requests/<int:pk>/delete/', RequestDeleteView.as_view(), name='request_delete'),
+    path('requests/<int:request_id>/approvals/', ApprovalListView.as_view(), name='approval_list'),
+    path('approvals/<int:pk>/update/', ApprovalUpdateView.as_view(), name='approval_update'),
 ]
